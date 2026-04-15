@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸 후쿠오카 경비</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050508;--card:rgba(18,18,25,0.85);--border:rgba(255,255,255,0.06);
+  --text:#e4e4e7;--dim:#555;--pink:#ff6b9d;--gold:#ffd700;--teal:#4ecdc4;
+  --purple:#a855f7;--blue:#3b82f6;
+}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Noto Sans KR','Outfit',sans-serif;
+  overflow-x:hidden;min-height:100vh;
+}
+
+/* ========== AURORA BACKGROUND ========== */
+.aurora{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;
+  overflow:hidden;
+}
+.aurora-blob{
+  position:absolute;border-radius:50%;filter:blur(120px);opacity:0.3;
+  animation:auroraFloat 12s ease-in-out infinite alternate;
+}
+.aurora-blob:nth-child(1){
+  width:600px;height:600px;top:-200px;left:-100px;
+  background:radial-gradient(circle,#ff6b9d,transparent 70%);
+  animation-duration:14s;
+}
+.aurora-blob:nth-child(2){
+  width:500px;height:500px;top:40%;right:-150px;
+  background:radial-gradient(circle,#4ecdc4,transparent 70%);
+  animation-duration:18s;animation-delay:-4s;
+}
+.aurora-blob:nth-child(3){
+  width:450px;height:450px;bottom:-100px;left:30%;
+  background:radial-gradient(circle,#a855f7,transparent 70%);
+  animation-duration:16s;animation-delay:-8s;
+}
+.aurora-blob:nth-child(4){
+  width:350px;height:350px;top:20%;left:50%;
+  background:radial-gradient(circle,#ffd700,transparent 70%);
+  animation-duration:20s;animation-delay:-2s;opacity:0.15;
+}
+@keyframes auroraFloat{
+  0%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(60px,-40px) scale(1.1)}
+  66%{transform:translate(-30px,50px) scale(0.9)}
+  100%{transform:translate(40px,20px) scale(1.05)}
+}
+
+/* ========== GRAIN OVERLAY ========== */
+.grain{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;
+  opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ========== SPARKLE PARTICLES ========== */
+.sparkles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.sparkle{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:#fff;opacity:0;
+  animation:sparkleAnim 4s ease-in-out infinite;
+}
+@keyframes sparkleAnim{
+  0%,100%{opacity:0;transform:scale(0)}
+  50%{opacity:0.8;transform:scale(1)}
+}
+
+/* ========== MAIN LAYOUT ========== */
+.main{position:relative;z-index:2;padding:40px 24px 60px;max-width:1000px;margin:0 auto}
+
+/* ========== SHINY TEXT ========== */
+.shiny-text{
+  font-family:'Outfit',sans-serif;font-size:2.6rem;font-weight:800;
+  letter-spacing:-1px;
+  background:linear-gradient(
+    120deg,
+    #ff6b9d 0%,#ffd700 20%,#4ecdc4 40%,#a855f7 60%,#ff6b9d 80%,#ffd700 100%
+  );
+  background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shinySlide 4s linear infinite;
+}
+@keyframes shinySlide{0%{background-position:300% 0}100%{background-position:0% 0}}
+
+/* ========== GLOW CARD ========== */
+.glow-card{
+  position:relative;background:var(--card);
+  border:1px solid var(--border);border-radius:16px;
+  padding:24px;backdrop-filter:blur(20px);
+  overflow:hidden;
+}
+.glow-card::before{
+  content:'';position:absolute;inset:-1px;border-radius:17px;
+  background:conic-gradient(from var(--angle,0deg),transparent 40%,var(--pink) 50%,transparent 60%);
+  opacity:0;transition:opacity 0.4s;z-index:-1;
+  animation:glowSpin 4s linear infinite;
+}
+.glow-card:hover::before{opacity:0.6}
+@keyframes glowSpin{0%{--angle:0deg}100%{--angle:360deg}}
+@property --angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+
+/* ========== ANIMATED BORDER CARD ========== */
+.gradient-border{
+  position:relative;border-radius:16px;padding:1px;
+  background:linear-gradient(135deg,var(--pink),var(--gold),var(--teal),var(--purple));
+  background-size:300% 300%;
+  animation:gradientShift 6s ease infinite;
+}
+.gradient-border-inner{
+  background:rgba(10,10,15,0.95);border-radius:15px;padding:20px 32px;
+  backdrop-filter:blur(20px);
+}
+@keyframes gradientShift{
+  0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
+}
+
+/* ========== TABS ========== */
+.tabs{display:flex;justify-content:center;gap:6px;margin-bottom:28px}
+.tab-btn{
+  padding:10px 28px;border:1px solid var(--border);border-radius:10px;
+  background:transparent;color:var(--dim);cursor:pointer;
+  font-family:inherit;font-size:13px;font-weight:600;
+  transition:all 0.3s;position:relative;overflow:hidden;
+}
+.tab-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,107,157,0.1),rgba(255,215,0,0.1));
+  opacity:0;transition:opacity 0.3s;
+}
+.tab-btn.active{
+  color:var(--text);
+  border-color:rgba(255,107,157,0.3);
+  box-shadow:0 0 20px rgba(255,107,157,0.1),inset 0 0 20px rgba(255,107,157,0.05);
+}
+.tab-btn.active::after{opacity:1}
+.tab-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.1)}
+
+/* ========== STAT CARDS ========== */
+.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:28px 0}
+.stat-card{
+  text-align:center;padding:4px 0;
+}
+.stat-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.stat-value{font-family:'Outfit';font-size:1.8rem;font-weight:700}
+.stat-value.yen{color:var(--pink);text-shadow:0 0 20px rgba(255,107,157,0.3)}
+.stat-value.won{color:var(--gold);text-shadow:0 0 20px rgba(255,215,0,0.3)}
+.stat-value.count{color:var(--teal);text-shadow:0 0 20px rgba(78,205,196,0.3)}
+
+/* ========== BAR CHART ========== */
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.bar-label{width:120px;font-size:11px;color:var(--dim);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;height:28px;background:rgba(255,255,255,0.03);border-radius:6px;overflow:hidden;position:relative}
+.bar-fill{
+  height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+}
+.bar-fill::after{
+  content:'';position:absolute;top:0;left:-100%;width:200%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+  animation:barShimmer 2s ease-in-out infinite;
+}
+@keyframes barShimmer{0%{left:-100%}100%{left:100%}}
+.bar-val{font-size:10px;color:#000;font-weight:700;position:relative;z-index:1}
+.bar-krw{width:80px;font-size:11px;color:var(--dim);text-align:right;flex-shrink:0}
+
+/* ========== DONUT ========== */
+.donut-wrap{display:flex;align-items:center;gap:24px;justify-content:center;flex-wrap:wrap}
+.donut-legend{display:flex;flex-direction:column;gap:8px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.legend-dot{width:10px;height:10px;border-radius:4px;flex-shrink:0;box-shadow:0 0 8px currentColor}
+.legend-label{color:var(--dim);width:80px}
+.legend-pct{color:var(--text);font-weight:600;font-family:'Outfit'}
+
+/* ========== DAY CARDS ========== */
+.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.day-card{
+  background:rgba(255,255,255,0.02);border:1px solid var(--border);
+  border-radius:14px;padding:20px;text-align:center;
+  transition:all 0.3s;position:relative;overflow:hidden;
+}
+.day-card:hover{
+  border-color:rgba(255,107,157,0.2);
+  box-shadow:0 0 30px rgba(255,107,157,0.05);
+  transform:translateY(-2px);
+}
+.day-label{font-size:11px;color:var(--dim);margin-bottom:6px}
+.day-value{font-family:'Outfit';font-size:1.3rem;font-weight:700;margin-bottom:2px}
+.day-sub{font-size:12px;color:var(--dim)}
+
+/* ========== TABLE ========== */
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--border);background:var(--card);backdrop-filter:blur(20px)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{
+  padding:14px 12px;text-align:left;color:var(--dim);font-weight:500;font-size:11px;
+  border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);
+  cursor:pointer;user-select:none;white-space:nowrap;
+  transition:color 0.2s;
+}
+th:hover{color:var(--text)}
+th.right,td.right{text-align:right}
+td{padding:11px 12px;border-bottom:1px solid var(--border);transition:background 0.15s}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.store-tag{
+  font-size:10px;padding:3px 8px;border-radius:5px;
+  background:rgba(255,255,255,0.05);white-space:nowrap;
+}
+.yen-cell{color:var(--pink);font-weight:600;font-variant-numeric:tabular-nums;font-family:'Outfit'}
+.won-cell{color:var(--gold);font-variant-numeric:tabular-nums;font-family:'Outfit'}
+tfoot td{background:rgba(255,255,255,0.03);font-weight:700;font-size:13px}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:768px){
+  .shiny-text{font-size:1.6rem}
+  .stats{gap:12px}
+  .stat-value{font-size:1.3rem}
+  .day-grid{grid-template-columns:1fr}
+  .bar-label{width:80px;font-size:10px}
+  .gradient-border-inner{padding:14px 16px}
+  .donut-wrap{flex-direction:column}
+}
+
+/* ========== SECTION TITLE ========== */
+.section-title{
+  font-size:15px;font-weight:600;margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title .icon{font-size:18px}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr}}
+
+.footer{text-align:center;margin-top:40px;color:var(--dim);font-size:11px;opacity:0.6}
+
+/* ========== FADE-IN ========== */
+.fade-in{opacity:0;transform:translateY(20px);animation:fadeUp 0.6s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- Aurora Background -->
+<div class="aurora">
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+</div>
+<div class="grain"></div>
+
+<!-- Sparkle Particles -->
+<div class="sparkles" id="sparkles"></div>
+
+<div class="main">
+  <!-- Header -->
+  <div style="text-align:center;margin-bottom:12px" class="fade-in">
+    <div class="shiny-text">🌸 바오들의 후쿠오카소비</div>
+    <p style="color:var(--dim);font-size:13px;margin-top:8px;font-weight:300">
+      2026.04.10 — 04.12 · 2박 3일 후쿠오카 여행 경비 리포트
+    </p>
+  </div>
+
+  <!-- Stats -->
+  <div class="fade-in" style="animation-delay:0.1s;display:flex;justify-content:center">
+    <div class="gradient-border">
+      <div class="gradient-border-inner">
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-label">Total JPY</div>
+            <div class="stat-value yen" id="totalYen">—</div>
+          </div>
+          <div style="width:1px;background:var(--border);margin:0 12px"></div>
+          <div class="stat-card">
+            <div class="stat-label">Total KRW</div>
+            <div class="stat-value won" id="totalKrw">—</div>
+          </div>
+          <div style="width:1px;background:var(--border);margin:0 12px"></div>
+          <div class="stat-card">
+            <div class="stat-label">Items</div>
+            <div class="stat-value count" id="totalCount">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs fade-in" style="animation-delay:0.2s;margin-top:32px">
+    <button class="tab-btn active" onclick="switchTab('charts')">📊 차트</button>
+    <button class="tab-btn" onclick="switchTab('table')">📋 데이터</button>
+  </div>
+
+  <!-- Charts Tab -->
+  <div id="chartsTab" class="fade-in" style="animation-delay:0.3s">
+    <!-- 구매처별 -->
+    <div class="glow-card" style="margin-bottom:20px">
+      <div class="section-title"><span class="icon">📊</span> 구매처별 지출</div>
+      <div id="storeChart"></div>
+    </div>
+
+    <!-- 2-col -->
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="glow-card">
+        <div class="section-title"><span class="icon">🍩</span> 카테고리별</div>
+        <div id="catChart" class="donut-wrap"></div>
+      </div>
+      <div class="glow-card">
+        <div class="section-title"><span class="icon">📅</span> 일자별</div>
+        <div id="dayChart" class="donut-wrap"></div>
+      </div>
+    </div>
+
+    <!-- Day Summary -->
+    <div class="day-grid" id="daySummary"></div>
+  </div>
+
+  <!-- Table Tab -->
+  <div id="tableTab" style="display:none" class="fade-in">
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th onclick="sortTable('date')">날짜</th>
+          <th onclick="sortTable('store')">구매처</th>
+          <th onclick="sortTable('category')">카테고리</th>
+          <th onclick="sortTable('title')">항목</th>
+          <th class="right" onclick="sortTable('yen')">¥ 엔</th>
+          <th class="right" onclick="sortTable('krw')">₩ 원</th>
+        </tr></thead>
+        <tbody id="tableBody"></tbody>
+        <tfoot id="tableFoot"></tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">1엔 = 9.35원 기준 환산 · Notion DB 연동</div>
+</div>
+
+<script>
+const RATE = 9.35;
+const STORE_COLORS = [
+  '#ff6b9d','#ffd700','#4ecdc4','#a855f7','#f59e0b',
+  '#3b82f6','#22c55e','#ef4444','#06b6d4','#ec4899',
+  '#8b5cf6','#14b8a6','#f97316','#64748b','#84cc16','#fb7185'
+];
+const CAT_COLORS = {
+  '🛍️ 쇼핑':'#ff6b9d','🍜 식비':'#ffd700','☕ 카페':'#4ecdc4','🏨 숙소':'#a855f7',
+  '🚃 교통':'#3b82f6','🎮 관광/엔터':'#22c55e','📦 기타':'#64748b'
+};
+const DAY_COLORS = ['#4ecdc4','#ff6b9d','#ffd700'];
+
+// ========== DATA ==========
+let items = [];
+let currentSort = {col:'date', dir:'asc'};
+
+// Try Notion MCP, fallback to hardcoded
+async function loadData() {
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        model:"claude-sonnet-4-20250514", max_tokens:4000,
+        system:`Query Notion database "🧾 후쿠오카 경비" (collection://edc9cba1-7830-4fcb-bb87-fdd973fddf27). Return ONLY a JSON array with fields: title, date, category, store, yen. No markdown. Skip rows where 구매처 is empty.`,
+        messages:[{role:"user",content:"Fetch all expense items. JSON array only."}],
+        mcp_servers:[{type:"url",url:"https://mcp.notion.com/mcp",name:"notion"}]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.filter(b=>b.type==="text").map(b=>b.text).join("") || "";
+    const clean = text.replace(/```json\n?/g,"").replace(/```\n?/g,"").trim();
+    const parsed = JSON.parse(clean);
+    if (Array.isArray(parsed) && parsed.length > 5) {
+      items = parsed.map(i=>({...i, krw: Math.round(i.yen * RATE)}));
+      render(); return;
+    }
+  } catch(e) { console.log("MCP fallback:", e); }
+  loadFallback();
+}
+
+function loadFallback() {
+  const raw = [
+    ["2026-04-10","플라자호텔","🏨 숙소",800,"宿泊税"],
+    ["2026-04-10","텐진니시도리","🍜 식비",9130,"モツ銅 天神西通り"],
+    ["2026-04-10","세븐일레븐","🍜 식비",1398,"コンビニ おつまみ・酒"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",2000,"Dセラムマスク 30枚B x4"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",718,"情熱価格 有機むぎ茶 x2"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",900,"デオナチュレ 足指さらさらクリーム"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",430,"ポケットモンスター ボディスポンジ"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",1500,"CHOIマスク 毛穴 x2"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",1999,"フェキソフェナジン鼻炎CX 6"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",800,"ハンギョドン なりきり x2"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",2490,"陶器ダイカットマグカ"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",1430,"メラノCC酵素洗顔 x2"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",1198,"メンソレータム リップフォンデ x2"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",5990,"ナイフピーラー 3点セット"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",900,"Rツメキリ"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",5280,"サガミオリジナル001 Lサイズ x2"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",3980,"フィーノ美溶液ヘアマスク替 x2"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",599,"ビオレTBB乳液金木犀替"],
+    ["2026-04-11","돈키호테","🍜 식비",599,"水恋湾 飲むヨーグルト"],
+    ["2026-04-11","돈키호테","🍜 식비",980,"メロンサンド"],
+    ["2026-04-11","로손","🍜 식비",174,"モモトヨウナシ 350ML"],
+    ["2026-04-11","로손","🍜 식비",151,"大きなツインシュー"],
+    ["2026-04-11","로손","🍜 식비",308,"アサヒスーパードライ ジョッキ 485ML"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",17990,"響 ブレンダーズチョイス 国内"],
+    ["2026-04-11","돈키호테","🛍️ 쇼핑",2090,"キオールド"],
+    ["2026-04-11","오호리 우나기","🍜 식비",7600,"おほりうなぎ 弁当 x2"],
+    ["2026-04-11","보더라인 레코드","🛍️ 쇼핑",2580,"ドロップス LP (1)"],
+    ["2026-04-11","보더라인 레코드","🛍️ 쇼핑",2980,"ドロップス LP (2)"],
+    ["2026-04-11","보더라인 레코드","🛍️ 쇼핑",1980,"중고 LP (1)"],
+    ["2026-04-11","보더라인 레코드","🛍️ 쇼핑",2980,"중고 LP (2)"],
+    ["2026-04-11","링크스 후쿠오카","🛍️ 쇼핑",21000,"獺祭23 + 響 JAPANESE HARMONY"],
+    ["2026-04-11","타워레코드","🛍️ 쇼핑",6090,"久石譲 DGオーケストラ LP"],
+    ["2026-04-11","쿠로다한","🍜 식비",7790,"海鮮丼"],
+    ["2026-04-11","세븐일레븐","🍜 식비",1026,"コンビニ 酒・おつまみ"],
+    ["2026-04-12","스타벅스","☕ 카페",432,"アイスコーヒー (1)"],
+    ["2026-04-12","스타벅스","☕ 카페",432,"アイスコーヒー (2)"],
+    ["2026-04-12","세리아","🛍️ 쇼핑",110,"餃子ぬいぐるみキーチェー"],
+    ["2026-04-12","세리아","🛍️ 쇼핑",110,"キーホルダー フランスパン&クロワッサン"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",2200,"ABBA / ベリー・ベスト・オブ・アバ"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",1800,"ビートルズ / 4人はアイドル"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",4200,"ヴェルヴェット・アンダーグラウンド / VU"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",3200,"山下達郎 / メロディーズ"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",5000,"BEATLES / ANTHOLOGY 1"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",4200,"BEATLES / ANTHOLOGY 2"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",6000,"ビートルズ / アンソロジー3"],
+    ["2026-04-12","Face Records","🛍️ 쇼핑",1000,"グローヴァー・ワシントン JR. / 訪れ"],
+    ["2026-04-12","로손 공항","🍜 식비",193,"間食"],
+    ["2026-04-12","釜喜利うどん","🍜 식비",1480,"海老天うどん"],
+    ["2026-04-12","釜喜利うどん","🍜 식비",660,"生ビール中"],
+    ["2026-04-12","후쿠오카공항","🍜 식비",928,"アイス・プリン"],
+  ];
+  items = raw.map(r => ({
+    date:r[0], store:r[1], category:r[2], yen:r[3], title:r[4], krw:Math.round(r[3]*RATE)
+  }));
+  render();
+}
+
+// ========== AGGREGATION ==========
+function aggregate(key) {
+  const m = {};
+  items.forEach(i => { m[i[key]] = (m[i[key]]||0) + i.yen; });
+  return Object.entries(m).sort((a,b) => b[1]-a[1]);
+}
+function aggregateDay() {
+  const m = {};
+  items.forEach(i => { const d = i.date.slice(5); m[d] = (m[d]||0)+i.yen; });
+  return Object.entries(m).sort((a,b)=>a[0].localeCompare(b[0]));
+}
+
+// ========== RENDER ==========
+function render() {
+  const totalYen = items.reduce((s,i)=>s+i.yen,0);
+  document.getElementById('totalYen').textContent = '¥' + totalYen.toLocaleString();
+  document.getElementById('totalKrw').textContent = '₩' + Math.round(totalYen*RATE).toLocaleString();
+  document.getElementById('totalCount').textContent = items.length + '건';
+
+  renderBars();
+  renderDonut('catChart', aggregate('category'), CAT_COLORS);
+  renderDonut('dayChart', aggregateDay(), null, DAY_COLORS);
+  renderDaySummary();
+  renderTable();
+}
+
+function renderBars() {
+  const data = aggregate('store');
+  const max = data[0][1];
+  let html = '';
+  data.forEach(([store, yen], i) => {
+    const pct = (yen/max)*100;
+    const c = STORE_COLORS[i % STORE_COLORS.length];
+    html += `<div class="bar-row">
+      <div class="bar-label">${store}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${pct}%;background:${c}">
+          ${pct > 15 ? `<span class="bar-val">¥${yen.toLocaleString()}</span>` : ''}
+        </div>
+      </div>
+      <div class="bar-krw">₩${Math.round(yen*RATE).toLocaleString()}</div>
+    </div>`;
+  });
+  document.getElementById('storeChart').innerHTML = html;
+}
+
+function renderDonut(containerId, data, colorMap, colorArr) {
+  const total = data.reduce((s,d)=>s+d[1],0);
+  const size = 200, r = size/2, ir = r*0.55;
+  let cumAngle = 0;
+  let paths = '', legends = '';
+
+  data.forEach(([label, val], i) => {
+    const angle = (val/total)*360;
+    const s1 = (Math.PI/180)*(cumAngle-90);
+    cumAngle += angle;
+    const e1 = (Math.PI/180)*(cumAngle-90);
+    const la = angle > 180 ? 1 : 0;
+    const x1o=r+r*Math.cos(s1), y1o=r+r*Math.sin(s1);
+    const x2o=r+r*Math.cos(e1), y2o=r+r*Math.sin(e1);
+    const x1i=r+ir*Math.cos(e1), y1i=r+ir*Math.sin(e1);
+    const x2i=r+ir*Math.cos(s1), y2i=r+ir*Math.sin(s1);
+    const path = `M${x1o},${y1o} A${r},${r} 0 ${la},1 ${x2o},${y2o} L${x1i},${y1i} A${ir},${ir} 0 ${la},0 ${x2i},${y2i} Z`;
+    const c = colorMap?.[label] || (colorArr ? colorArr[i] : STORE_COLORS[i]);
+    const pct = ((val/total)*100).toFixed(1);
+    paths += `<path d="${path}" fill="${c}" stroke="var(--bg)" stroke-width="2">
+      <title>${label}: ¥${val.toLocaleString()} (${pct}%)</title></path>`;
+    legends += `<div class="legend-item">
+      <div class="legend-dot" style="background:${c};color:${c}"></div>
+      <span class="legend-label">${label}</span>
+      <span class="legend-pct">${pct}%</span>
+    </div>`;
+  });
+
+  document.getElementById(containerId).innerHTML = `
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      ${paths}
+      <text x="${r}" y="${r-6}" text-anchor="middle" fill="var(--text)" font-size="15" font-weight="700" font-family="Outfit">¥${total.toLocaleString()}</text>
+      <text x="${r}" y="${r+12}" text-anchor="middle" fill="var(--dim)" font-size="9">₩${Math.round(total*RATE).toLocaleString()}</text>
+    </svg>
+    <div class="donut-legend">${legends}</div>`;
+}
+
+function renderDaySummary() {
+  const days = aggregateDay();
+  const dayNames = ['금','토','일'];
+  let html = '';
+  days.forEach(([day, yen], i) => {
+    html += `<div class="day-card glow-card">
+      <div class="day-label">DAY ${i+1} · ${day.replace('-','/')} (${dayNames[i]||''})</div>
+      <div class="day-value" style="color:${DAY_COLORS[i]}">¥${yen.toLocaleString()}</div>
+      <div class="day-sub">₩${Math.round(yen*RATE).toLocaleString()}</div>
+    </div>`;
+  });
+  document.getElementById('daySummary').innerHTML = html;
+}
+
+function renderTable() {
+  const sorted = [...items].sort((a,b) => {
+    let va=a[currentSort.col], vb=b[currentSort.col];
+    if (currentSort.col==='yen'||currentSort.col==='krw') return currentSort.dir==='asc'?va-vb:vb-va;
+    return currentSort.dir==='asc'?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va));
+  });
+  const totalYen = items.reduce((s,i)=>s+i.yen,0);
+  let html = '';
+  sorted.forEach(item => {
+    html += `<tr>
+      <td>${item.date.slice(5).replace('-','/')}</td>
+      <td><span class="store-tag">${item.store}</span></td>
+      <td style="font-size:11px">${item.category}</td>
+      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${item.title}</td>
+      <td class="right yen-cell">¥${item.yen.toLocaleString()}</td>
+      <td class="right won-cell">₩${item.krw.toLocaleString()}</td>
+    </tr>`;
+  });
+  document.getElementById('tableBody').innerHTML = html;
+  document.getElementById('tableFoot').innerHTML = `<tr>
+    <td colspan="4" style="text-align:right;font-weight:700">합계</td>
+    <td class="right yen-cell" style="font-size:13px">¥${totalYen.toLocaleString()}</td>
+    <td class="right won-cell" style="font-size:13px">₩${Math.round(totalYen*RATE).toLocaleString()}</td>
+  </tr>`;
+}
+
+// ========== TABS ==========
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('chartsTab').style.display = tab==='charts'?'block':'none';
+  document.getElementById('tableTab').style.display = tab==='table'?'block':'none';
+}
+
+function sortTable(col) {
+  if (currentSort.col===col) currentSort.dir = currentSort.dir==='asc'?'desc':'asc';
+  else { currentSort.col=col; currentSort.dir='asc'; }
+  renderTable();
+}
+
+// ========== SPARKLES ==========
+function createSparkles() {
+  const container = document.getElementById('sparkles');
+  for (let i=0; i<40; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = Math.random()*4+'s';
+    s.style.animationDuration = (3+Math.random()*3)+'s';
+    s.style.width = s.style.height = (1+Math.random()*3)+'px';
+    container.appendChild(s);
+  }
+}
+
+// ========== INIT ==========
+createSparkles();
+loadData();
+</script>
+</body>
+</html>
